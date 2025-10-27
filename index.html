@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D 5e to PF2e Transition Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2 {
+            font-family: 'Inter', sans-serif; /* Changed from 'Playfair Display' */
+            line-height: 1.25; /* Added font height */
+        }
+        /* Make numbered section headers stand out */
+        h1 {
+            font-size: 2.5rem !important; /* 40px */
+            font-weight: 800 !important;
+            margin-top: 2.5rem !important;
+            margin-bottom: 2rem !important;
+            padding-top: 1.5rem !important;
+            border-top: 4px solid #2563eb !important;
+            color: #1e293b;
+        }
+        h2 {
+            font-size: 2rem !important; /* 32px */
+            font-weight: 700 !important;
+            margin-top: 2rem !important;
+            margin-bottom: 1.5rem !important;
+            padding-top: 1rem !important;
+            color: #1e293b;
+        }
+        h3 {
+            font-size: 1.5rem !important; /* 24px */
+            font-weight: 600 !important;
+            margin-top: 1.5rem !important;
+            margin-bottom: 1rem !important;
+        }
+        h4 {
+            font-size: 1.25rem !important; /* 20px */
+            font-weight: 600 !important;
+            margin-top: 1rem !important;
+            margin-bottom: 0.75rem !important;
+        }
+        /* Search highlight styling */
+        .search-highlight {
+            background-color: #fef08a; /* yellow-200 */
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+            font-weight: 500;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; /* slate-100 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8; /* slate-400 */
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; /* slate-500 */
+        }
+        /* Active ToC link */
+        .toc-link.active {
+            color: #2563eb; /* blue-600 */
+            font-weight: 700;
+            background-color: #e0f2fe; /* sky-100 */
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            margin-left: -0.5rem;
+            border-left: 3px solid #2563eb; /* blue-600 */
+            transition: all 0.2s ease-in-out;
+        }
+        .toc-link.active:not(.text-lg) { /* for sub-links */
+            margin-left: -1rem;
+            padding-left: 1.5rem;
+        }
+        .toc-link:not(.active) {
+            transition: all 0.2s ease-in-out;
+        }
+        /* Offset scroll target for fixed header */
+        [id] {
+            scroll-margin-top: 5rem; /* Adjust for fixed header/mobile menu height */
+        }
+        @media (min-width: 1024px) { /* Adjust for desktop sticky sidebar */
+            [id] {
+                scroll-margin-top: 1rem;
+            }
+        }
+
+        /* Style for numbered section headers - REMOVED */
+        
+        /* Prose specific adjustments for better dark mode tables */
+        .prose table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5em;
+            margin-bottom: 1.5em;
+        }
+        .prose th, .prose td {
+            border: 1px solid #e2e8f0; /* slate-200 */
+            padding: 0.75em;
+            text-align: left;
+        }
+        .prose th {
+            background-color: #f1f5f9; /* slate-100 */
+            font-weight: 600;
+            color: #1e293b; /* slate-800 */
+        }
+        .prose td {
+            background-color: #ffffff; /* white */
+        }
+        .prose tr:nth-child(even) td {
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .prose ul {
+            list-style-type: disc;
+        }
+        .prose ol {
+            list-style-type: decimal;
+        }
+        .prose ul, .prose ol {
+            padding-left: 1.5em;
+            margin-top: 0.75em;
+            margin-bottom: 0.75em;
+        }
+        .prose li {
+            margin-bottom: 0.5em;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <div class="flex flex-col lg:flex-row min-h-screen">
+        <!-- Mobile Header & Nav Toggle --><header class="lg:hidden sticky top-0 z-20 bg-white/90 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <h1 class="text-xl font-bold text-gray-900">PF2e Transition Guide</h1>
+                <button id="menu-toggle" class="p-2 rounded-md text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <span class="sr-only">Toggle Menu</span>
+                </button>
+            </div>
+            <!-- Mobile Nav Menu --><nav id="mobile-menu" class="hidden px-4 pt-2 pb-4 border-t border-gray-200 bg-white shadow-lg">
+                <ul class="flex flex-col space-y-2">
+                    <li><a href="#guide" class="toc-link-mobile block py-1 font-semibold text-gray-800 hover:text-blue-600">Full Transition Guide</a></li>
+                    <li><a href="#core-mechanics" class="toc-link-mobile block py-1 pl-4 text-gray-600 hover:text-gray-900">&raquo; 1. Core Mechanics</a></li>
+                    <li><a href="#character-creation" class="toc-link-mobile block py-1 pl-4 text-gray-600 hover:text-gray-900">&raquo; 2. Character Creation</a></li>
+                    <li><a href="#combat-tactics" class="toc-link-mobile block py-1 pl-4 text-gray-600 hover:text-gray-900">&raquo; 3. Combat & Tactics</a></li>
+                    <li><a href="#magic-spells" class="toc-link-mobile block py-1 pl-4 text-gray-600 hover:text-gray-900">&raquo; 4. Magic & Spells</a></li>
+                    <li><a href="#the-math" class="toc-link-mobile block py-1 pl-4 text-gray-600 hover:text-gray-900">&raquo; 5. The Math</a></li>
+                    <li><a href="#terminology" class="toc-link-mobile block py-1 font-semibold text-gray-800 hover:text-blue-600">Terminology Cheat Sheet</a></li>
+                    <li><a href="#actions" class="toc-link-mobile block py-1 font-semibold text-gray-800 hover:text-blue-600">Action Economy Cheat Sheet</a></li>
+                    <li><a href="#spellcasting-prep" class="toc-link-mobile block py-1 font-semibold text-gray-800 hover:text-blue-600">Spellcaster Preparation</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Sidebar / Desktop Table of Contents --><aside class="hidden lg:block lg:w-72 xl:w-80 lg:flex-shrink-0 sticky top-0 h-screen overflow-y-auto bg-white border-r border-gray-200 p-6 shadow-sm">
+            <h2 class="text-3xl font-bold mb-8 text-gray-900">Table of Contents</h2>
+            <nav>
+                <ul class="space-y-3">
+                    <li>
+                        <a href="#guide" class="toc-link text-lg font-semibold text-gray-800 hover:text-blue-600 block py-1 px-2">Full Transition Guide</a>
+                        <ul class="space-y-2 mt-2 ml-4 border-l border-gray-300 pl-4">
+                            <li><a href="#core-mechanics" class="toc-link block text-gray-600 hover:text-gray-900 py-1 px-2">1. Core Mechanics</a></li>
+                            <li><a href="#character-creation" class="toc-link block text-gray-600 hover:text-gray-900 py-1 px-2">2. Character Creation</a></li>
+                            <li><a href="#combat-tactics" class="toc-link block text-gray-600 hover:text-gray-900 py-1 px-2">3. Combat & Tactics</a></li>
+                            <li><a href="#magic-spells" class="toc-link block text-gray-600 hover:text-gray-900 py-1 px-2">4. Magic & Spells</a></li>
+                            <li><a href="#the-math" class="toc-link block text-gray-600 hover:text-gray-900 py-1 px-2">5. The Math</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#terminology" class="toc-link text-lg font-semibold text-gray-800 hover:text-blue-600 block py-1 px-2">Terminology Cheat Sheet</a>
+                    </li>
+                    <li>
+                        <a href="#actions" class="toc-link text-lg font-semibold text-gray-800 hover:text-blue-600 block py-1 px-2">Action Economy Cheat Sheet</a>
+                    </li>
+                    <li>
+                        <a href="#spellcasting-prep" class="toc-link text-lg font-semibold text-gray-800 hover:text-blue-600 block py-1 px-2">Spellcaster Preparation</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content --><main class="flex-1 min-w-0">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+                
+                <!-- === Search Bar Added === -->
+                <div class="mb-10 w-full max-w-3xl mx-auto">
+                    <label for="search-input" class="sr-only">Search Guide</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <input type="search" id="search-input" class="block w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Search guide sections...">
+                    </div>
+                </div>
+                
+                <div class="prose max-w-none prose-p:text-lg prose-p:leading-relaxed prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-code:bg-gray-100 prose-code:rounded-md prose-code:p-1 prose-code:text-sm prose-code:font-mono prose-code:text-indigo-600 prose-code:before:content-none prose-code:after:content-none prose-ul:list-disc prose-ul:ml-6 prose-ol:list-decimal prose-ol:ml-6 prose-li:my-2 prose-h1:text-5xl prose-h1:font-bold prose-h1:mb-8 prose-h1:mt-10 prose-h1:pt-6 prose-h1:border-t-4 prose-h1:border-blue-600 prose-h2:text-4xl prose-h2:font-bold prose-h2:mb-6 prose-h2:mt-8 prose-h2:pt-4 prose-h3:text-2xl prose-h3:font-semibold prose-h3:mb-4 prose-h3:mt-6 prose-h4:text-xl prose-h4:font-semibold prose-h4:mb-3 prose-h4:mt-4">
+                    
+                    <!-- === Full Transition Guide === --><section id="guide" class="bg-white p-4 sm:p-8 rounded-lg shadow-lg mb-12 border border-gray-200">
+                        
+                        <h1 id="core-mechanics">1. The Core Mechanic: 3 Actions & The 4 Degrees of Success</h1>
+                        
+                        <h3>Your Turn is 3 Actions</h3>
+                        <p>In PF2e, you get <strong>3 Actions</strong> on your turn. You also get 1 <strong>Reaction</strong>.</p>
+                        <ul>
+                            <li>You can use your 3 actions for <em>anything</em>.</li>
+                            <li>Want to attack three times? You can (with a penalty, see below).</li>
+                            <li>Want to move, cast a spell, and attack? You can.</li>
+                            <li>Want to move three times? You can.</li>
+                        </ul>
+
+                        <h4>Common Actions:</h4>
+                        <ul>
+                            <li><strong>Strike (1 Action):</strong> Make a single melee or ranged attack.</li>
+                            <li><strong>Stride (1 Action):</strong> Move up to your Speed.</li>
+                            <li><strong>Step (1 Action):</strong> Move 5 feet. This <strong>does not</strong> trigger Attacks of Opportunity.</li>
+                            <li><strong>Cast a Spell (1-3 Actions):</strong> Most spells cost 2 Actions, but some are 1, 3, or even a Reaction. This is listed in the spell's stat block.</li>
+                            <li><strong>Raise a Shield (1 Action):</strong> Gain your shield's AC bonus until the start of your next turn.</li>
+                            <li><strong>Skill Actions:</strong> Many skills have associated actions, like <strong>Demoralize</strong> (1 Action) to frighten a foe, <strong>Treat Wounds</strong> (10 min) to heal, or <strong>Hide</strong> (1 Action) to become hidden.</li>
+                        </ul>
+
+                        <h3>The "Multiple Attack Penalty" (MAP)</h3>
+                        <p>You <em>can</em> attack three times, but it's usually not a good idea.</p>
+                        <ul>
+                            <li>Your <strong>1st Strike</strong> on your turn is made at your full bonus.</li>
+                            <li>Your <strong>2nd Strike</strong> on your turn takes a <strong>-5 penalty</strong> (-4 for agile weapons).</li>
+                            <li>Your <strong>3rd (and subsequent) Strike</strong> takes a <strong>-10 penalty</strong> (-8 for agile weapons).</li>
+                        </ul>
+                        <p>This penalty applies to any attack roll, including Strikes and some spells.</p>
+
+                        <h3>The Four Degrees of Success</h3>
+                        <p>In PF2e, there are four possible outcomes for almost any roll (attacks, saves, skill checks):</p>
+                        <ul>
+                            <li><strong>Critical Success:</strong> You beat the DC by 10 or more.</li>
+                            <li><strong>Success:</strong> You beat the DC (but not by 10 or more).</li>
+                            <li><strong>Failure:</strong> You fail to meet the DC (but not by 10 or more).</li>
+                            <li><strong>Critical Failure:</strong> You fail the DC by 10 or more.</li>
+                        </ul>
+
+                        <h4>Example: Attack Roll</h4>
+                        <ul>
+                            <li><strong>Crit Success:</strong> Double damage.</li>
+                            <li><strong>Success:</strong> Normal damage.</li>
+                            <li><strong>Failure:</strong> You miss.</li>
+                            <li><strong>Crit Failure:</strong> You miss, and might have a penalty (like dropping your weapon, depending on the ability).</li>
+                        </ul>
+                        <p>Spells, in particular, often have effects for all four degrees. A successful save against a <em>Fireball</em>, for instance, might mean you take half damage, while a <em>critical success</em> means you take <em>no</em> damage.</p>
+
+                        <h1 id="character-creation">2. Character Creation: The "ABCs"</h1>
+                        <p>Character creation in PF2e is <strong>A</strong>ncestry, <strong>B</strong>ackground, <strong>C</strong>lass.</p>
+                        <ul>
+                            <li><strong>Ancestry (replaces Race):</strong> This is your heritage (Human, Elf, Dwarf, Goblin, etc.). It gives you a "heritage" (like a subrace), a starting Ancestry Feat, ability boosts/flaws, and HP. You get new Ancestry Feats at levels 5, 9, 13, and 17.</li>
+                            <li><strong>Background (replaces 5e Background):</strong> This gives you two ability boosts, a Skill Feat, and proficiency in two skills.</li>
+                            <li><strong>Class (replaces 5e Class):</strong> This is your job (Fighter, Wizard, etc.). It gives you ability boosts, HP, and a ton of <strong>Class Feats</strong>.</li>
+                        </ul>
+
+                        <h3>Feats, Feats, and More Feats!</h3>
+                        <p>You get a different feat <em>at almost every level</em>.</p>
+                        <ul>
+                            <li><strong>Class Feats:</strong> These define your build. A Fighter might choose feats that improve their shield use, while another Fighter picks feats for two-handed power attacks. This is how you "specialize" your class.</li>
+                            <li><strong>Skill Feats:</strong> These make you better at skills in non-combat ways (e.g., "Intimidating Glare" lets you Demoralize without speaking).</li>
+                            <li><strong>General Feats:</strong> A grab-bag of useful abilities (e.g., "Incredible Initiative" or "Toughness").</li>
+                            <li><strong>Ancestry Feats:</strong> These connect you to your heritage (e.g., "Elven Weapon Familiarity").</li>
+                        </ul>
+
+                        <h1 id="combat-tactics">3. Combat & Tactics</h1>
+                        <ul>
+                            <li><strong>Attacks of Opportunity (AoO):</strong> <strong>Most characters do NOT have this.</strong> Only specific classes (like the Fighter) and some monsters get AoO as a special reaction.</li>
+                            <li><strong>Conditions:</strong> Conditions are <em>very</em> important and granular. Instead of just "Poisoned," you might have a condition with a value, like <strong>Frightened 1</strong> (a -1 to all checks and DCs) or <strong>Persistent Damage 1d6</strong> (you take 1d6 damage at the end of your turn). These values often decrease by 1 each round.</li>
+                            <li><strong>Dying:</strong> When you hit 0 HP, you are <strong>Dying</strong>. You make a "Recovery Check" (a flat check, like a 5e death save) each round.
+                                <ul>
+                                    <li><strong>Dying 1:</strong> You're down.</li>
+                                    <li><strong>Dying 2:</strong> You're in trouble.</li>
+                                    <li><strong>Dying 3:</strong> You're <em>really</em> in trouble.</li>
+                                    <li><strong>Dying 4:</strong> You are dead.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Wounded:</strong> When you get healed from 0 HP, you gain the <strong>Wounded 1</strong> condition. If you go down <em>again</em> while Wounded, your Dying value <em>starts</em> at your Wounded value.</li>
+                        </ul>
+
+                        <h1 id="magic-spells">4. Magic & Spells</h1>
+                        <ul>
+                            <li><strong>Spell Levels:</strong> PF2e has 10 spell levels, not 9. Level 10 spells are epic, world-changing magic.</li>
+                            <li><strong>Cantrips:</strong> Cantrips are still 0-level spells, but they <strong>automatically heighten</strong> (scale) as you level up. You don't need to track different damage dice.</li>
+                            <li><strong>Spell Slots:</strong> These work very similarly to 5e for "prepared" casters like Wizards and Clerics. You prepare a specific spell in a specific slot.</li>
+                            <li><strong>Spontaneous Casters:</strong> Casters like Sorcerers and Bards have a "Spell Repertoire" (spells known) and can cast any of them using their slots, just like a 5e Sorcerer.</li>
+                            <li><strong>Focus Spells:</strong> A "per-encounter" power. You get a number of <strong>Focus Points</strong> (usually 1-3). You can spend a point to cast a spell. You can <strong>Refocus</strong> (a 10-minute activity) to get your points back.</li>
+                        </ul>
+
+                        <h1 id="the-math">5. The Math: "Proficiency + Level"</h1>
+                        <p>In PF2e, your proficiency is tied to your <strong>Level</strong>.</p>
+                        <p><strong>Your main bonus = Ability Mod + Proficiency Bonus + Level</strong></p>
+                        <ul>
+                            <li><strong>Proficiency Bonus:</strong>
+                                <ul>
+                                    <li>Untrained: +0</li>
+                                    <li>Trained: +2</li>
+                                    <li>Expert: +4</li>
+                                    <li>Master: +6</li>
+                                    <li>Legendary: +8</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p>This means at Level 1, a Fighter with 18 STR (a +4 mod) and "Trained" in Longswords (+2) has an attack bonus of:
+                        <code>+4 (Str) + 2 (Trained) + 1 (Level) = +7</code></p>
+                        <p>At Level 20, that same Fighter with 22 STR (+6 mod) and "Legendary" in Longswords (+8) has an attack bonus of:
+                        <code>+6 (Str) + 8 (Legendary) + 20 (Level) = +34</code></p>
+                        <p><strong>What this means:</strong></p>
+                        <ol>
+                            <li><strong>Numbers get big!</strong></li>
+                            <li><strong>Every +1 matters.</strong> A +1 bonus is a 5% better chance to hit <em>and</em> a 5% better chance to <em>crit</em>.</li>
+                            <li><strong>You are expected to keep pace.</strong> You must fight "on-level" monsters. A monster that is 4 levels above you is a <em>boss monster</em> and will be incredibly dangerous.</li>
+                        </ol>
+                    </section>
+
+                    <hr class="my-12 border-gray-200">
+
+                    <!-- === Terminology Cheat Sheet === --><section id="terminology" class="bg-white p-4 sm:p-8 rounded-lg shadow-lg mb-12 border border-gray-200">
+                        <h2>Terminology Cheat Sheet: D&D 5e to Pathfinder 2e</h2>
+                        <div class="overflow-x-auto">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>D&D 5e Term</th>
+                                        <th>Pathfinder 2e Term</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Action Economy</strong></td>
+                                        <td><strong>Action Economy</strong></td>
+                                        <td><strong>5e:</strong> 1 Action, 1 Bonus Action, 1 Reaction, Movement. <br> <strong>PF2e:</strong> 3 Actions, 1 Reaction. Anything (move, attack, spell) can be an action.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Race</td>
+                                        <td><strong>Ancestry</strong></td>
+                                        <td>e.g., Human, Elf, Dwarf.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Subrace</td>
+                                        <td><strong>Heritage</strong></td>
+                                        <td>e.g., Wood Elf, Hill Dwarf.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Background</td>
+                                        <td><strong>Background</strong></td>
+                                        <td>Mechanically similar, but gives 2 Ability Boosts and a Skill Feat.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Class</td>
+                                        <td><strong>Class</strong></td>
+                                        <td>e.g., Fighter, Wizard.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Subclass</td>
+                                        <td><strong>Varies (Class Feats, Subclass)</strong></td>
+                                        <td>Your "subclass" is built from your <strong>Class Feats</strong>. Some classes (like Cleric or Sorcerer) pick a major subclass at level 1.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Feat</td>
+                                        <td><strong>Feat</strong></td>
+                                        <td>Feats are central to PF2e. You get Class Feats, Skill Feats, General Feats, and Ancestry Feats almost every level.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Proficiency Bonus</td>
+                                        <td><strong>Proficiency Bonus</strong></td>
+                                        <td>Scales differently. It's a flat bonus based on rank: Trained (+2), Expert (+4), Master (+6), Legendary (+8). <strong>Your level is added separately.</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Armor Class (AC)</td>
+                                        <td><strong>Armor Class (AC)</strong></td>
+                                        <td>Calculated differently: 10 + DEX (up to cap) + Armor Bonus + Proficiency. You are (Un)Trained, Expert, etc. in your armor type.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Saving Throw</td>
+                                        <td><strong>Saving Throw</strong></td>
+                                        <td>Same three types: Fortitude (Con), Reflex (Dex), Will (Wis). You have proficiency ranks in each.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attack Roll</td>
+                                        <td><strong>Strike (Action)</strong> / <strong>Attack Roll</strong></td>
+                                        <td>A "Strike" is the 1-action ability to make an attack roll.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Advantage / Disadvantage</td>
+                                        <td><strong>Fortune / Misfortune</strong></td>
+                                        <td>These are specific, named effects (less common than 5e). They instruct you to roll twice and take the higher (Fortune) or lower (Misfortune).</td>
+                                    </tr>
+                                    <tr>
+                                        <td>"Bonus"</td>
+                                        <td><strong>Circumstance, Item, Status</strong></td>
+                                        <td>Bonuses are <em>typed</em>. You can only benefit from the highest of each type (e.g., you can't have two "status" bonuses to AC).</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cantrip</td>
+                                        <td><strong>Cantrip</strong></td>
+                                        <td>0-level spells. They <strong>automatically heighten</strong> (scale) for free as you level up.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Spellcasting Ability</td>
+                                        <td><strong>Spellcasting Ability</strong></td>
+                                        <td>Same concept (INT for Wizards, CHA for Sorcerers, etc.).</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Death Saving Throw</td>
+                                        <td><strong>Recovery Check</strong></td>
+                                        <td>A flat check (no ability modifier) made when you are <strong>Dying</strong>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Short Rest</td>
+                                        <td><strong>(No Direct Equivalent)</strong></td>
+                                        <td>You can <strong>Refocus</strong> (10 min) to regain Focus Points. You <strong>Treat Wounds</strong> (10 min) to heal.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Long Rest</td>
+                                        <td><strong>Rest (8 hours)</strong></td>
+                                        <td>Fully heals you and resets all daily abilities and spell slots.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attack of Opportunity</td>
+                                        <td><strong>Attack of Opportunity (Reaction)</strong></td>
+                                        <td><strong>This is not a universal rule.</strong> It's a specific Reaction that mostly just Fighters and some monsters get.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Inspiration</td>
+                                        <td><strong>Hero Point</strong></td>
+                                        <td>You get 1 Hero Point at the start of each session. You can spend it to re-roll a d20.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <hr class="my-12 border-gray-200">
+
+                    <!-- === Action Economy Cheat Sheet === --><section id="actions" class="bg-white p-4 sm:p-8 rounded-lg shadow-lg mb-12 border border-gray-200">
+                        <h2>Pathfinder 2e: The 3-Action Economy</h2>
+                        <p class="text-xl font-medium text-gray-900 mb-4">On your turn, you get:</p>
+                        <ul class="list-disc list-inside space-y-2 mb-6 text-lg">
+                            <li><strong>3 Actions</strong> (use them for anything!)</li>
+                            <li><strong>1 Reaction</strong> (used on anyone's turn, including your own)</li>
+                            <li><strong>Free Actions</strong> (don't cost any of the above)</li>
+                        </ul>
+
+                        <h3>The Golden Rule: MAP</h3>
+                        <p><strong>MAP = Multiple Attack Penalty</strong></p>
+                        <p>Your second attack (Strike) on your turn gets a -5 penalty. Your third gets a -10.</p>
+                        <ul class="list-disc list-inside space-y-2 mb-6">
+                            <li><strong>1st Strike:</strong> +0</li>
+                            <li><strong>2nd Strike:</strong> -5 (or -4 for "agile" weapons)</li>
+                            <li><strong>3rd+ Strike:</strong> -10 (or -8 for "agile" weapons)</li>
+                        </ul>
+                        
+                        <h3>Common 1-Action Uses</h3>
+                        <div class="overflow-x-auto">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Action</th>
+                                        <th>What it does</th>
+                                        <th>Triggers AoO?</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Strike</strong></td>
+                                        <td>Make one attack (Melee or Ranged).</td>
+                                        <td>No</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Stride</strong></td>
+                                        <td>Move up to your speed.</td>
+                                        <td class="text-red-600"><strong>Yes</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Step</strong></td>
+                                        <td>Move 5 feet.</td>
+                                        <td><strong>No</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Raise a Shield</strong></td>
+                                        <td>Gain your shield's AC bonus until your next turn.</td>
+                                        <td>No</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Take Cover</strong></td>
+                                        <td>Gain Cover (+2 AC) behind an object.</td>
+                                        <td>No</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Demoralize</strong></td>
+                                        <td>Attempt an Intimidation check to make a foe <strong>Frightened</strong>.</td>
+                                        <td>No</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Hide</strong></td>
+                                        <td>Attempt to become <strong>Hidden</strong> (requires cover).</td>
+                                        <td>No</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Seek</strong></td>
+                                        <td>Attempt to find a <strong>Hidden</strong> or <strong>Undetected</strong> creature.</td>
+                                        <td>No</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Common 2-Action Uses</h3>
+                        <div class="overflow-x-auto">
+                           <table>
+                                <thead>
+                                    <tr>
+                                        <th>Action</th>
+                                        <th>What it does</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Cast a Spell</strong></td>
+                                        <td>Most standard spells (like <em>Heal</em> or <em>Fireball</em>) take 2 actions.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Force Open</strong></td>
+                                        <td>Attempt an Athletics check to break open a door or chest.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Common 3-Action Uses</h3>
+                        <div class="overflow-x-auto">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Action</th>
+                                        <th>What it does</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Cast a Spell</strong></td>
+                                        <td>Some powerful spells (like <em>Summon Animal</em>) take 3 actions.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>All-Out Assault</strong></td>
+                                        <td>(Example Fighter Feat) Make two Strikes.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Common Reactions</h3>
+                        <div class="overflow-x-auto">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Action</th>
+                                        <th>Trigger</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Attack of Opportunity</strong></td>
+                                        <td>(Specific abilities only!) A foe <strong>Strides</strong>, <strong>Manipulates</strong>, or makes a <strong>Ranged Attack</strong> while in your reach.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Shield Block</strong></td>
+                                        <td>(Requires a shield) You would take damage from a physical attack.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cast a Spell</strong></td>
+                                        <td>Some spells have a trigger (e.g., "an ally would take damage").</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Example Turns (What you can do with 3 Actions)</h3>
+                        <ul class="space-y-4">
+                            <li><strong>Mobile Fighter:</strong>
+                                <ol>
+                                    <li><strong>Stride</strong> up to an enemy.</li>
+                                    <li><strong>Strike</strong> the enemy (at +0 MAP).</li>
+                                    <li><strong>Raise a Shield</strong> to get +2 AC.</li>
+                                </ol>
+                            </li>
+                            <li><strong>Aggressive Barbarian:</strong>
+                                <ol>
+                                    <li><strong>Stride</strong> up to an enemy.</li>
+                                    <li><strong>Strike</strong> the enemy (at +0 MAP).</li>
+                                    <li><strong>Strike</strong> again (at -5 MAP).</li>
+                                </ol>
+                            </li>
+                            <li><strong>Support Cleric:</strong>
+                                <ol>
+                                    <li><strong>Cast a 2-Action <em>Heal</em></strong> on an ally.</li>
+                                    <li><strong>Stride</strong> away from an enemy.</li>
+                                </ol>
+                            </li>
+                            <li><strong>Skirmishing Rogue:</strong>
+                                <ol>
+                                    <li><strong>Strike</strong> an enemy (at +0 MAP).</li>
+                                    <li><strong>Step</strong> 5 feet away (doesn't trigger AoO).</li>
+                                    <li><strong>Hide</strong> behind a pillar.</li>
+                                </ol>
+                            </li>
+                            <li><strong>Blaster Sorcerer:</strong>
+                                <ol>
+                                    <li><strong>Cast a 2-Action <em>Fireball</em></strong>.</li>
+                                    <li><strong>Demoralize</strong> an enemy with your last action.</li>
+                                </ol>
+                            </li>
+                        </ul>
+                    </section>
+                    
+                    <hr class="my-12 border-gray-200">
+
+                    <!-- === Spellcaster Preparation === --><section id="spellcasting-prep" class="bg-white p-4 sm:p-8 rounded-lg shadow-lg mb-12 border border-gray-200">
+                        <h2>How PF2e Spellcasters Prepare Spells</h2>
+                        <p>This guide breaks down the two main systems for "preparing" spells in Pathfinder 2nd Edition, as well as the universal "Focus Spell" system.</p>
+
+                        <h3>1. Prepared Spellcasters (The "Vancian" System)</h3>
+                        <p>These casters have access to a large list of spells but must meticulously plan their day.</p>
+                        <ul>
+                            <li><strong>Classes:</strong> <span class="text-blue-600 font-semibold">Wizard, Cleric, Druid, Witch, Magus</span></li>
+                            <li><strong>How it Works:</strong> Each morning during your "Daily Preparations," you must choose a <em>specific spell</em> to place into <em>each of your spell slots</em>.</li>
+                            <li><strong>Example:</strong> You have three "1st-level" slots. You must decide <em>now</em> that the first holds <em>Magic Missile</em>, the second holds <em>Grease</em>, and the third also holds <em>Magic Missile</em>.</li>
+                            <li><strong>Casting:</strong> To cast <em>Grease</em>, you must expend the slot you prepared it in. You cannot use your third slot (which holds <em>Magic Missile</em>) to cast <em>Grease</em>, even though it's the same spell level.</li>
+                            <li><strong>Primary Pro:</strong> Incredible day-to-day versatility. You can change your entire spell list to match expected challenges.</li>
+                            <li><strong>Primary Con:</strong> No flexibility in the moment. If you prepared <em>Magic Missile</em> three times, you cannot cast <em>Grease</em>.</li>
+                        </ul>
+
+                        <h4>Variations on Prepared Casters:</h4>
+                        <ul>
+                            <li><strong>Wizard:</strong> Knows all common 0-level spells. For all other levels, they can only prepare spells that are <strong>in their spellbook</strong>. They add spells to their book by leveling up or by scribing from scrolls.</li>
+                            <li><strong>Cleric & Druid:</strong> These casters know their <strong>entire class spell list</strong> automatically. A 5th-level Druid has access to every single 1st, 2nd, and 3rd-level spell on the Primal spell list and can prepare any of them.</li>
+                            <li><strong>Witch:</strong> Functions like a Wizard, but their <strong>spellbook is their Familiar</strong>. They must have their familiar nearby to prepare spells.</li>
+                            <li><strong>Magus:</strong> A "bounded" caster. They are prepared casters, but have far fewer spell slots that top out at a lower level.</li>
+                        </ul>
+
+                        <h3>2. Spontaneous Spellcasters (The "Repertoire" System)</h3>
+                        <p>These casters are all about flexibility in the moment, at the cost of day-to-day variety.</p>
+                        <ul>
+                            <li><strong>Classes:</strong> <span class="text-blue-600 font-semibold">Sorcerer, Bard, Oracle, Psychic, Summoner</span></li>
+                            <li><strong>How it Works:</strong> These casters <strong>do not prepare spells</strong>. Instead, they have a small, fixed list of spells they know called a <strong>Spell Repertoire</strong>.</li>
+                            <li><strong>Example:</strong> You have three "1st-level" slots. Your repertoire is a list of 2-3 spells you know for that level.</li>
+                            <li><strong>Casting:</strong> You can use any of
+                                your spell slots to cast <em>any spell</em> in your repertoire of that level or lower. If you have three 1st-level slots and know <em>Heal</em> and <em>Magic Missile</em>, you can cast <em>Heal</em> three times, <em>Magic Missile</em> three times, or any other combination until you run out of slots.</li>
+                            <li><strong>Primary Pro:</strong> Maximum on-the-fly flexibility. You always have your entire (small) toolbox available.</li>
+                            <li><strong>Primary Con:</strong> Very little day-to-day versatility. You can only change the spells in your repertoire when you level up.</li>
+                            <li><strong>Signature Spells:</strong> Spontaneous casters get "Signature Spells." A signature spell is automatically heightened to any spell level you can cast. For other spells, you must learn them at a <em>specific level</em>.</li>
+                        </ul>
+                        
+                        <h3>3. The "Not-a-Caster" Caster: The Alchemist</h3>
+                        <p>The Alchemist is in a category all their own.</p>
+                        <ul>
+                            <li><strong>How it Works:</strong> Alchemists do not have spell slots or a spell repertoire.</li>
+                            <li><strong>Preparation:</strong> Each day, they prepare a batch of <strong>Infused Reagents</strong>.</li>
+                            <li><strong>"Casting":</strong> As a 1 or 2-action ability, they can spend their Infused Reagents to <strong>craft any alchemical item</strong> from their <strong>Formula Book</strong> on the-fly.</li>
+                        </ul>
+
+                        <h3>4. The Universal System: Focus Spells</h3>
+                        <p>This is a separate system that <em>almost all</em> spellcasters (and even some non-casters!) use.</p>
+                        <ul>
+                            <li><strong>What they are:</strong> Special spells unique to your class or subclass.</li>
+                            <li><strong>How they work:</strong> You have a small pool of <strong>Focus Points</strong> (usually 1-3).</li>
+                            <li><strong>Casting:</strong> Casting a Focus Spell costs 1 Focus Point.</li>
+                            <li><strong>Resetting:</strong> You get your Focus Points back by using the <strong>Refocus</strong> activity (10 minutes).</li>
+                        </ul>
+
+                        <h4>Quick Summary Table</h4>
+                        <div class="overflow-x-auto">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Spellcasting Type</th>
+                                        <th>How it Works</th>
+                                        <th>Classes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Prepared</strong></td>
+                                        <td>Pre-assigns specific spells to specific slots each day.</td>
+                                        <td><strong>Wizard, Cleric, Druid, Witch, Magus</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Spontaneous</strong></td>
+                                        <td>Has a small list of known spells (repertoire) and can use any slot to cast any known spell.</td>
+                                        <td><strong>Sorcerer, Bard, Oracle, Psychic, Summoner</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Alchemical</strong></td>
+                                        <td>Uses "Infused Reagents" to craft items from a formula book on the fly.</td>
+                                        <td><strong>Alchemist</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Focus Spells</strong></td>
+                                        <td>All classes can have these. A separate pool of points regained by a 10-min <strong>Refocus</strong>.</td>
+                                        <td><strong>All of the above</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                </div> <!-- End Prose --></div> <!-- End Container --></main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when a link is clicked
+            const mobileLinks = document.querySelectorAll('.toc-link-mobile');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Active link highlighting on scroll
+            const sections = document.querySelectorAll('section[id], h2[id]'); // Observe sections and H2s within sections
+            const tocLinks = document.querySelectorAll('.toc-link');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3 // Section/h2 is 30% in view
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                let activeId = null;
+                
+                // Find the highest section/h2 that is intersecting and closest to the top
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (!activeId || entry.boundingClientRect.top < document.getElementById(activeId).getBoundingClientRect().top) {
+                            activeId = entry.target.id;
+                        }
+                    }
+                });
+
+                // Apply/remove active class
+                tocLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const href = link.getAttribute('href');
+                    
+                    if (href === `#${activeId}`) {
+                        link.classList.add('active');
+                    } else {
+                        // If an H2 is active, also highlight its parent section link
+                        const parentSectionId = document.getElementById(activeId)?.closest('section')?.id;
+                        if (parentSectionId && href === `#${parentSectionId}`) {
+                            link.classList.add('active');
+                        }
+                    }
+                });
+
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // === Search Functionality (Filtering Sections) ===
+            const searchInput = document.getElementById('search-input');
+            const contentContainer = document.querySelector('main .prose');
+
+            // Store original HTML for each section to restore when clearing search
+            const originalSectionHTML = new Map();
+
+            // Function to highlight text matches
+            function highlightText(element, searchTerm) {
+                // Skip if no search term
+                if (!searchTerm) return;
+
+                // Get all text nodes in the element
+                const walker = document.createTreeWalker(
+                    element,
+                    NodeFilter.SHOW_TEXT,
+                    null,
+                    false
+                );
+
+                const textNodes = [];
+                let node;
+                while (node = walker.nextNode()) {
+                    textNodes.push(node);
+                }
+
+                // Highlight matches in each text node
+                textNodes.forEach(textNode => {
+                    const text = textNode.textContent;
+                    const lowerText = text.toLowerCase();
+                    const lowerSearch = searchTerm.toLowerCase();
+
+                    if (lowerText.includes(lowerSearch)) {
+                        const fragment = document.createDocumentFragment();
+                        let lastIndex = 0;
+
+                        // Find all occurrences
+                        let index = lowerText.indexOf(lowerSearch);
+                        while (index !== -1) {
+                            // Add text before match
+                            if (index > lastIndex) {
+                                fragment.appendChild(document.createTextNode(text.substring(lastIndex, index)));
+                            }
+
+                            // Add highlighted match
+                            const mark = document.createElement('mark');
+                            mark.className = 'search-highlight';
+                            mark.textContent = text.substring(index, index + searchTerm.length);
+                            fragment.appendChild(mark);
+
+                            lastIndex = index + searchTerm.length;
+                            index = lowerText.indexOf(lowerSearch, lastIndex);
+                        }
+
+                        // Add remaining text
+                        if (lastIndex < text.length) {
+                            fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
+                        }
+
+                        textNode.parentNode.replaceChild(fragment, textNode);
+                    }
+                });
+            }
+
+            // Function to remove all highlights
+            function removeHighlights(element) {
+                const highlights = element.querySelectorAll('.search-highlight');
+                highlights.forEach(mark => {
+                    const text = mark.textContent;
+                    mark.replaceWith(document.createTextNode(text));
+                });
+                // Normalize to merge adjacent text nodes
+                element.normalize();
+            }
+
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.trim();
+
+                // Only search within the main body sections, not the ToC
+                const sections = contentContainer.querySelectorAll('section[id]');
+                const hrs = contentContainer.querySelectorAll('hr');
+
+                // If search is empty, show everything and remove highlights
+                if (searchTerm === '') {
+                    sections.forEach(section => {
+                        section.style.display = '';
+                        removeHighlights(section);
+
+                        // Show all subsections (h1, h2, h3, h4, p, ul, ol, table, etc.)
+                        const allElements = section.querySelectorAll('h1, h2, h3, h4, p, ul, ol, table, div');
+                        allElements.forEach(el => el.style.display = '');
+                    });
+                    hrs.forEach(hr => {
+                        hr.style.display = '';
+                    });
+                    return;
+                }
+
+                const lowerSearchTerm = searchTerm.toLowerCase();
+
+                // Filter sections based on search term
+                sections.forEach(section => {
+                    // Remove previous highlights
+                    removeHighlights(section);
+
+                    let sectionHasMatch = false;
+
+                    // Check each subsection (h1 and its following content until next h1)
+                    const h1Elements = section.querySelectorAll('h1');
+
+                    if (h1Elements.length > 0) {
+                        // Process each h1 and its content
+                        h1Elements.forEach(h1 => {
+                            // Get all elements between this h1 and the next h1 (or end of section)
+                            const subsectionElements = [h1];
+                            let currentElement = h1.nextElementSibling;
+
+                            while (currentElement && currentElement.tagName !== 'H1') {
+                                subsectionElements.push(currentElement);
+                                currentElement = currentElement.nextElementSibling;
+                            }
+
+                            // Check if this subsection has a match
+                            const subsectionText = subsectionElements
+                                .map(el => el.textContent)
+                                .join(' ')
+                                .toLowerCase();
+
+                            const hasMatch = subsectionText.includes(lowerSearchTerm);
+
+                            if (hasMatch) {
+                                sectionHasMatch = true;
+                                // Show this subsection
+                                subsectionElements.forEach(el => {
+                                    el.style.display = '';
+                                    // Highlight matches
+                                    if (el.textContent.toLowerCase().includes(lowerSearchTerm)) {
+                                        highlightText(el, searchTerm);
+                                    }
+                                });
+                            } else {
+                                // Hide this subsection
+                                subsectionElements.forEach(el => {
+                                    el.style.display = 'none';
+                                });
+                            }
+                        });
+                    } else {
+                        // No h1 elements, check the entire section
+                        const sectionText = section.textContent.toLowerCase();
+                        sectionHasMatch = sectionText.includes(lowerSearchTerm);
+
+                        if (sectionHasMatch) {
+                            section.style.display = '';
+                            highlightText(section, searchTerm);
+                        }
+                    }
+
+                    // Show/hide the entire section container
+                    if (sectionHasMatch) {
+                        section.style.display = '';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+
+                // Also hide/show the <hr> separators based on the visibility of the *next* section
+                hrs.forEach(hr => {
+                    let nextElement = hr.nextElementSibling;
+                    // Skip over any text nodes or other non-section elements
+                    while (nextElement && nextElement.tagName !== 'SECTION') {
+                        nextElement = nextElement.nextElementSibling;
+                    }
+
+                    if (nextElement && nextElement.style.display === 'none') {
+                        hr.style.display = 'none';
+                    } else {
+                        hr.style.display = '';
+                    }
+                });
+            });
+            // === End Search Functionality ===
+
+        });
+    </script>
+</body>
+</html>
+
